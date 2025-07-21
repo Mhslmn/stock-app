@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>مدیریت دارایی</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 font-sans max-w-md mx-auto space-y-4">
+  
+  <!-- صفحه لاگین -->
+<div id="loginPage" class="fixed inset-0 bg-gray-200 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded shadow-md w-80">
+    <h2 class="text-xl font-bold text-center mb-4">ورود</h2>
+    <input id="loginCode" type="password" placeholder="رمز ورود" class="w-full p-2 border rounded mb-4">
+    <button onclick="checkLogin()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+      ورود
+    </button>
+    <p id="loginError" class="text-red-500 text-sm mt-2 hidden text-center">رمز نادرست است!</p>
+  </div>
+</div>
+
+
+  <h1 class="text-xl font-bold text-center text-indigo-600">📱 مدیریت دارایی</h1>
+
+  <!-- انتخاب کاربر و عملیات -->
+  <div class="space-y-2">
+    <select id="nameSelect" class="w-full p-2 border rounded"></select>
+
+    <input type="number" id="amount" placeholder="مثلاً ۲۰۰۰" class="w-full p-2 border rounded text-right">
+
+    <div class="flex justify-between text-sm space-x-2 rtl:space-x-reverse">
+      <button onclick="updateStock(+1)" class="flex-1 bg-green-500 text-white py-2 rounded hover:bg-green-600">➕ افزایش</button>
+      <button onclick="updateStock(-1)" class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600">➖ کاهش</button>
+      <button onclick="checkStock()" class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600">🔍 نمایش</button>
+    </div>
+
+    <p id="result" class="text-center text-sm mt-2 text-gray-700"></p>
+  </div>
+  <!-- دکمه نمایش کامل کاربران -->
+<div class="pt-4">
+  <button onclick="showAllUsers()" class="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600">
+    📊 نمایش کامل کاربران
+  </button>
+</div>
+
+<!-- جدول کامل کاربران -->
+<div id="fullUserTable" class="hidden mt-4 border-t pt-4">
+  <h2 class="text-md font-bold text-gray-700 mb-2">📋 جدول کامل دارایی‌ها</h2>
+  <table class="w-full text-sm text-right">
+    <thead>
+      <tr class="text-gray-600">
+        <th class="border px-2 py-1">نام</th>
+        <th class="border px-2 py-1">دارایی</th>
+      </tr>
+    </thead>
+    <tbody id="fullTableBody"></tbody>
+  </table>
+</div>
+
+
+  <!-- افزودن یا حذف کاربر -->
+  <div class="border-t pt-4 space-y-2">
+    <h2 class="text-md font-bold text-gray-700">👤 افزودن یا حذف کاربر</h2>
+    <input type="text" id="newUser" placeholder="نام جدید" class="w-full p-2 border rounded text-right">
+    <div class="flex justify-between space-x-2 rtl:space-x-reverse text-sm">
+      <button onclick="addUser()" class="flex-1 bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600">➕ افزودن</button>
+      <button onclick="removeUser()" class="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600">🗑 حذف</button>
+    </div>
+  </div>
+
+  <!-- جدول کاربران -->
+  <div class="border-t pt-4">
+    <h2 class="text-md font-bold text-gray-700 mb-2">📋 لیست کاربران</h2>
+    <table class="w-full text-sm text-right">
+      <thead>
+        <tr class="text-gray-600">
+          <th class="border px-2 py-1">نام</th>
+          <th class="border px-2 py-1">دارایی</th>
+        </tr>
+      </thead>
+      <tbody id="userTable"></tbody>
+    </table>
+  </div>
+
+</body>
+</html>
