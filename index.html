@@ -1,88 +1,777 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>مدیریت دارایی</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدیریت دارایی و حضور</title>
+  <style>
+    :root {
+      --primary: #4a6cf7;
+      --primary-dark: #3a56d6;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --gray-100: #f8fafc;
+      --gray-200: #e2e8f0;
+      --gray-500: #64748b;
+      --gray-700: #334155;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f6ff;
+      color: var(--gray-700);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: linear-gradient(to right, var(--primary), #6a11cb);
+      color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+    }
+    
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      transform: translateY(-3px);
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--gray-200);
+      color: var(--primary);
+      font-size: 1.4rem;
+    }
+    
+    .section-title i {
+      margin-left: 0.5rem;
+      font-size: 1.2em;
+    }
+    
+    button, select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid var(--gray-200);
+      border-radius: 0.8rem;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+    }
+    
+    button {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      padding: 0.9rem;
+      margin-top: 1rem;
+    }
+    
+    button:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    button.secondary {
+      background-color: var(--success);
+    }
+    
+    button.secondary:hover {
+      background-color: #0da271;
+    }
+    
+    button.danger {
+      background-color: var(--danger);
+    }
+    
+    button.danger:hover {
+      background-color: #dc2626;
+    }
+    
+    button.warning {
+      background-color: var(--warning);
+    }
+    
+    button.warning:hover {
+      background-color: #e69008;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    th, td {
+      border: 1px solid var(--gray-200);
+      padding: 0.8rem;
+      text-align: center;
+    }
+    
+    tr:nth-child(even) {
+      background-color: var(--gray-100);
+    }
+    
+    tr:hover {
+      background-color: rgba(74, 108, 247, 0.05);
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 0.8rem;
+      margin: 0.5rem 0;
+    }
+    
+    .flex-row > * {
+      flex: 1;
+    }
+    
+    .hidden { 
+      display: none; 
+    }
+    
+    .notification {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: 0.8rem;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+    }
+    
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .notification.success {
+      background-color: var(--success);
+    }
+    
+    .notification.error {
+      background-color: var(--danger);
+    }
+    
+    .notification.info {
+      background-color: var(--primary);
+    }
+    
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+    
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+    
+    .section-content {
+      padding: 1rem 0;
+      border-top: 1px solid var(--gray-200);
+      margin-top: 1rem;
+    }
+    
+    .attendance-controls {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .attendance-controls select {
+      flex: 2;
+    }
+    
+    .attendance-controls button {
+      flex: 1;
+      margin-top: 0;
+    }
+    
+    @media (max-width: 480px) {
+      .flex-row, .attendance-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800 p-4 font-sans max-w-md mx-auto space-y-4">
-  
-  <!-- صفحه لاگین -->
-<div id="loginPage" class="fixed inset-0 bg-gray-200 flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded shadow-md w-80">
-    <h2 class="text-xl font-bold text-center mb-4">ورود</h2>
-    <input id="loginCode" type="password" placeholder="رمز ورود" class="w-full p-2 border rounded mb-4">
-    <button onclick="checkLogin()" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-      ورود
-    </button>
-    <p id="loginError" class="text-red-500 text-sm mt-2 hidden text-center">رمز نادرست است!</p>
-  </div>
-</div>
-
-
-  <h1 class="text-xl font-bold text-center text-indigo-600">📱 مدیریت دارایی</h1>
-
-  <!-- انتخاب کاربر و عملیات -->
-  <div class="space-y-2">
-    <select id="nameSelect" class="w-full p-2 border rounded"></select>
-
-    <input type="number" id="amount" placeholder="مثلاً ۲۰۰۰" class="w-full p-2 border rounded text-right">
-
-    <div class="flex justify-between text-sm space-x-2 rtl:space-x-reverse">
-      <button onclick="updateStock(+1)" class="flex-1 bg-green-500 text-white py-2 rounded hover:bg-green-600">➕ افزایش</button>
-      <button onclick="updateStock(-1)" class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600">➖ کاهش</button>
-      <button onclick="checkStock()" class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600">🔍 نمایش</button>
+<body>
+  <div class="container">
+    <header>
+      <h1>سامانه مدیریت گروه‌ها و دارایی</h1>
+    </header>
+    
+    <!-- Login Section -->
+    <div id="loginSection" class="card">
+      <h2 class="section-title">ورود به سیستم</h2>
+      <div class="form-group">
+        <label for="accessCode">کد ورود</label>
+        <input type="password" id="accessCode" placeholder="کد ورود را وارد کنید">
+      </div>
+      <button onclick="handleLogin()">ورود به سیستم</button>
     </div>
-
-    <p id="result" class="text-center text-sm mt-2 text-gray-700"></p>
-  </div>
-  <!-- دکمه نمایش کامل کاربران -->
-<div class="pt-4">
-  <button onclick="showAllUsers()" class="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600">
-    📊 نمایش کامل کاربران
-  </button>
-</div>
-
-<!-- جدول کامل کاربران -->
-<div id="fullUserTable" class="hidden mt-4 border-t pt-4">
-  <h2 class="text-md font-bold text-gray-700 mb-2">📋 جدول کامل دارایی‌ها</h2>
-  <table class="w-full text-sm text-right">
-    <thead>
-      <tr class="text-gray-600">
-        <th class="border px-2 py-1">نام</th>
-        <th class="border px-2 py-1">دارایی</th>
-      </tr>
-    </thead>
-    <tbody id="fullTableBody"></tbody>
-  </table>
-</div>
-
-
-  <!-- افزودن یا حذف کاربر -->
-  <div class="border-t pt-4 space-y-2">
-    <h2 class="text-md font-bold text-gray-700">👤 افزودن یا حذف کاربر</h2>
-    <input type="text" id="newUser" placeholder="نام جدید" class="w-full p-2 border rounded text-right">
-    <div class="flex justify-between space-x-2 rtl:space-x-reverse text-sm">
-      <button onclick="addUser()" class="flex-1 bg-indigo-500 text-white py-2 rounded hover:bg-indigo-600">➕ افزودن</button>
-      <button onclick="removeUser()" class="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600">🗑 حذف</button>
+    
+    <!-- Main Application (Hidden by default) -->
+    <div id="mainSection" class="hidden">
+      <!-- Assets Section -->
+      <div class="card">
+        <div class="section-header" onclick="toggleSection('assetsSection')">
+          <h2>دارایی گروه‌ها</h2>
+          <span>▼</span>
+        </div>
+        <div id="assetsSection" class="section-content">
+          <table id="assetTable">
+            <thead>
+              <tr>
+                <th>نام گروه</th>
+                <th>دارایی (تومان)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <button onclick="fetchAssets()">بروزرسانی اطلاعات دارایی</button>
+        </div>
+      </div>
+      
+      <!-- Asset Management Section -->
+      <div class="card">
+        <div class="section-header" onclick="toggleSection('assetManagementSection')">
+          <h2>مدیریت دارایی</h2>
+          <span>▼</span>
+        </div>
+        <div id="assetManagementSection" class="section-content">
+          <div class="form-group">
+            <label for="groupSelect">انتخاب گروه</label>
+            <select id="groupSelect"></select>
+          </div>
+          
+          <div class="form-group">
+            <label for="amountInput">مقدار تغییر</label>
+            <input type="number" id="amountInput" placeholder="مقدار را وارد کنید">
+          </div>
+          
+          <div class="flex-row">
+            <button onclick="changeAsset(true)" class="secondary">افزایش دارایی</button>
+            <button onclick="changeAsset(false)" class="danger">کاهش دارایی</button>
+          </div>
+          
+          <div id="currentAsset" class="form-group" style="text-align: center; margin-top: 1.5rem; font-weight: bold;"></div>
+        </div>
+      </div>
+      
+      <!-- Group Management Section -->
+      <div class="card">
+        <div class="section-header" onclick="toggleSection('groupManagementSection')">
+          <h2>مدیریت گروه‌ها</h2>
+          <span>▼</span>
+        </div>
+        <div id="groupManagementSection" class="section-content">
+          <div class="form-group">
+            <label for="newGroupName">نام گروه</label>
+            <input type="text" id="newGroupName" placeholder="نام گروه جدید را وارد کنید">
+          </div>
+          
+          <div class="flex-row">
+            <button onclick="addGroup()" class="secondary">افزودن گروه جدید</button>
+            <button onclick="removeGroup()" class="danger">حذف گروه</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Member Management Section -->
+      <div class="card">
+        <div class="section-header" onclick="toggleSection('memberManagementSection')">
+          <h2>مدیریت اعضا</h2>
+          <span>▼</span>
+        </div>
+        <div id="memberManagementSection" class="section-content">
+          <div class="form-group">
+            <label for="memberGroupSelect">انتخاب گروه</label>
+            <select id="memberGroupSelect"></select>
+          </div>
+          
+          <div class="form-group">
+            <label for="newMemberName">نام عضو جدید</label>
+            <input type="text" id="newMemberName" placeholder="نام عضو جدید را وارد کنید">
+          </div>
+          
+          <button onclick="addMember()" class="secondary">افزودن عضو به گروه</button>
+        </div>
+      </div>
+      
+      <!-- Attendance Section -->
+      <div class="card">
+        <div class="section-header" onclick="toggleSection('attendanceSection')">
+          <h2>ثبت حضور و غیاب</h2>
+          <span>▼</span>
+        </div>
+        <div id="attendanceSection" class="section-content">
+          <div class="attendance-controls">
+            <select id="groupForAttendance" onchange="populateAttendance()"></select>
+            <button onclick="populateAttendance()" class="warning">بارگذاری اعضا</button>
+          </div>
+          
+          <div id="attendanceTable"></div>
+        </div>
+      </div>
     </div>
+    
+    <!-- Notification Container -->
+    <div id="notification" class="notification"></div>
   </div>
 
-  <!-- جدول کاربران -->
-  <div class="border-t pt-4">
-    <h2 class="text-md font-bold text-gray-700 mb-2">📋 لیست کاربران</h2>
-    <table class="w-full text-sm text-right">
-      <thead>
-        <tr class="text-gray-600">
-          <th class="border px-2 py-1">نام</th>
-          <th class="border px-2 py-1">دارایی</th>
-        </tr>
-      </thead>
-      <tbody id="userTable"></tbody>
-    </table>
-  </div>
+  <script>
+    const APP_ID = "ncekn7VRIJNsmirVuvocKRhznshe4Zn0mD68ipB3";
+    const JS_KEY = "oikoKqNjQ2PaDRRuP8ZL1fUcnoghOjnzwTS2sFLD";
+    const headers = {
+      "X-Parse-Application-Id": APP_ID,
+      "X-Parse-JavaScript-Key": JS_KEY,
+      "Content-Type": "application/json"
+    };
 
+    // DOM Elements
+    const loginSection = document.getElementById("loginSection");
+    const mainSection = document.getElementById("mainSection");
+    const notification = document.getElementById("notification");
+
+    // Login Function
+    function handleLogin() {
+      const code = document.getElementById("accessCode").value;
+      if (code === "1234") {
+        localStorage.setItem("loggedIn", true);
+        loginSection.classList.add("hidden");
+        mainSection.classList.remove("hidden");
+        init();
+        showNotification("ورود با موفقیت انجام شد", "success");
+      } else {
+        showNotification("کد ورود نامعتبر است", "error");
+      }
+    }
+
+    // Check if user is already logged in
+    function checkLogin() {
+      if (localStorage.getItem("loggedIn")) {
+        loginSection.classList.add("hidden");
+        mainSection.classList.remove("hidden");
+        init();
+      }
+    }
+
+    // Initialize the application
+    async function init() {
+      await fetchAssets();
+      await populateGroupSelect();
+      await populateMemberGroupSelect();
+      await populateAttendance();
+    }
+
+    // Toggle section visibility
+    function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      section.classList.toggle("hidden");
+    }
+
+    // Show notification
+    function showNotification(message, type) {
+      notification.textContent = message;
+      notification.className = `notification ${type} show`;
+      
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 3000);
+    }
+
+    // Fetch assets from server
+    async function fetchAssets() {
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
+        const data = await res.json();
+        const tbody = document.querySelector("#assetTable tbody");
+        tbody.innerHTML = "";
+        
+        data.results.forEach(row => {
+          const amount = new Intl.NumberFormat('fa-IR').format(row.amount);
+          tbody.innerHTML += `<tr><td>${row.name}</td><td>${amount}</td></tr>`;
+        });
+        
+        showNotification("اطلاعات دارایی با موفقیت به‌روزرسانی شد", "success");
+      } catch (error) {
+        console.error("Error fetching assets:", error);
+        showNotification("خطا در دریافت اطلاعات دارایی", "error");
+      }
+    }
+
+    // Change asset amount
+    async function changeAsset(increase) {
+      const name = document.getElementById("groupSelect").value;
+      const amount = parseInt(document.getElementById("amountInput").value);
+      
+      if (!name) {
+        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        return;
+      }
+      
+      if (!amount || amount <= 0) {
+        showNotification("مقدار نامعتبر است. لطفاً یک عدد مثبت وارد کنید", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name }))}`, { headers });
+        const data = await res.json();
+        
+        if (data.results.length === 0) {
+          showNotification("گروه مورد نظر یافت نشد", "error");
+          return;
+        }
+        
+        const obj = data.results[0];
+        const newAmount = obj.amount + (increase ? amount : -amount);
+        
+        if (newAmount < 0) {
+          showNotification("مقدار دارایی نمی‌تواند منفی باشد", "error");
+          return;
+        }
+
+        await fetch(`https://parseapi.back4app.com/classes/Assets/${obj.objectId}`, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({ amount: newAmount })
+        });
+        
+        const formattedAmount = new Intl.NumberFormat('fa-IR').format(newAmount);
+        document.getElementById("currentAsset").innerText = `دارایی فعلی: ${formattedAmount} تومان`;
+        showNotification(`دارایی گروه ${name} با موفقیت بروزرسانی شد`, "success");
+        await fetchAssets();
+      } catch (error) {
+        console.error("Error changing asset:", error);
+        showNotification("خطا در بروزرسانی دارایی", "error");
+      }
+    }
+
+    // Add a new group
+    async function addGroup() {
+      const name = document.getElementById("newGroupName").value.trim();
+      
+      if (!name) {
+        showNotification("لطفاً نام گروه را وارد کنید", "error");
+        return;
+      }
+
+      try {
+        // Check if group already exists
+        const checkRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name }))}`, { headers });
+        const checkData = await checkRes.json();
+        
+        if (checkData.results.length > 0) {
+          showNotification("گروه با این نام قبلاً ایجاد شده است", "error");
+          return;
+        }
+
+        await fetch("https://parseapi.back4app.com/classes/Assets", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ name, amount: 0 })
+        });
+        
+        document.getElementById("newGroupName").value = "";
+        showNotification(`گروه ${name} با موفقیت ایجاد شد`, "success");
+        await init();
+      } catch (error) {
+        console.error("Error adding group:", error);
+        showNotification("خطا در ایجاد گروه جدید", "error");
+      }
+    }
+
+    // Remove a group
+    async function removeGroup() {
+      const name = document.getElementById("newGroupName").value.trim();
+      
+      if (!name) {
+        showNotification("لطفاً نام گروه را وارد کنید", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name }))}`, { headers });
+        const data = await res.json();
+        
+        if (data.results.length === 0) {
+          showNotification("گروه مورد نظر یافت نشد", "error");
+          return;
+        }
+        
+        await fetch(`https://parseapi.back4app.com/classes/Assets/${data.results[0].objectId}`, {
+          method: "DELETE",
+          headers
+        });
+        
+        document.getElementById("newGroupName").value = "";
+        showNotification(`گروه ${name} با موفقیت حذف شد`, "success");
+        await init();
+      } catch (error) {
+        console.error("Error removing group:", error);
+        showNotification("خطا در حذف گروه", "error");
+      }
+    }
+
+    // Populate group dropdowns
+    async function populateGroupSelect() {
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
+        const data = await res.json();
+        const select = document.getElementById("groupSelect");
+        const attendSelect = document.getElementById("groupForAttendance");
+        
+        select.innerHTML = "";
+        attendSelect.innerHTML = "";
+        
+        data.results.forEach(row => {
+          const opt = `<option value="${row.name}">${row.name}</option>`;
+          select.innerHTML += opt;
+          attendSelect.innerHTML += opt;
+        });
+      } catch (error) {
+        console.error("Error populating group select:", error);
+        showNotification("خطا در دریافت لیست گروه‌ها", "error");
+      }
+    }
+    
+    // Populate member group dropdown
+    async function populateMemberGroupSelect() {
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
+        const data = await res.json();
+        const select = document.getElementById("memberGroupSelect");
+        
+        select.innerHTML = "";
+        data.results.forEach(row => {
+          select.innerHTML += `<option value="${row.name}">${row.name}</option>`;
+        });
+      } catch (error) {
+        console.error("Error populating member group select:", error);
+        showNotification("خطا در دریافت لیست گروه‌ها", "error");
+      }
+    }
+
+    // Populate attendance table
+    async function populateAttendance() {
+      const group = document.getElementById("groupForAttendance").value;
+      
+      if (!group) {
+        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://parseapi.back4app.com/classes/Persons?where=${encodeURIComponent(JSON.stringify({ group }))}`, { headers });
+        const data = await res.json();
+        
+        let html = `
+          <div style="margin: 1rem 0; font-weight: bold; text-align: center; color: var(--primary);">
+            اعضای گروه ${group}
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>نام عضو</th>
+                <th>تاخیر (دقیقه)</th>
+                <th>ثبت حضور</th>
+              </tr>
+            </thead>
+            <tbody>`;
+        
+        if (data.results.length === 0) {
+          html += `<tr><td colspan="3">هیچ عضوی در این گروه یافت نشد</td></tr>`;
+        } else {
+          data.results.forEach(p => {
+            html += `
+              <tr>
+                <td>${p.name}</td>
+                <td>
+                  <input type="number" 
+                         id="delay-${p.objectId}" 
+                         placeholder="0"
+                         min="0"
+                         style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--gray-200);">
+                </td>
+                <td>
+                  <button onclick="submitAttendance('${p.objectId}')" 
+                          style="padding: 0.5rem 1rem; background: var(--success); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
+                    ثبت
+                  </button>
+                </td>
+              </tr>`;
+          });
+        }
+        
+        html += `</tbody></table>`;
+        document.getElementById("attendanceTable").innerHTML = html;
+      } catch (error) {
+        console.error("Error populating attendance:", error);
+        showNotification("خطا در دریافت لیست اعضا", "error");
+      }
+    }
+
+    // Submit attendance
+    async function submitAttendance(personId) {
+      const delay = parseInt(document.getElementById(`delay-${personId}`).value) || 0;
+      
+      // Calculate reward based on delay
+      let reward = 1000;
+      if (delay <= 0) reward = 1000;
+      else if (delay <= 5) reward = 700;
+      else if (delay <= 10) reward = 500;
+      else reward = -500;
+
+      try {
+        // Get person details
+        const personRes = await fetch(`https://parseapi.back4app.com/classes/Persons/${personId}`, { headers });
+        const person = await personRes.json();
+        const group = person.group;
+
+        // Get group assets
+        const assetRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: group }))}`, { headers });
+        const assetData = await assetRes.json();
+        
+        if (assetData.results.length === 0) {
+          showNotification("گروه مربوطه یافت نشد", "error");
+          return;
+        }
+        
+        const asset = assetData.results[0];
+        const newAmount = asset.amount + reward;
+        
+        // Update group assets
+        await fetch(`https://parseapi.back4app.com/classes/Assets/${asset.objectId}`, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({ amount: newAmount })
+        });
+
+        showNotification(`حضور ثبت شد. ${reward} تومان ${reward > 0 ? 'پاداش' : 'جریمه'} برای گروه ${group} اعمال شد`, "success");
+        fetchAssets();
+      } catch (error) {
+        console.error("Error submitting attendance:", error);
+        showNotification("خطا در ثبت حضور", "error");
+      }
+    }
+    
+    // Add a new member to a group
+    async function addMember() {
+      const name = document.getElementById("newMemberName").value.trim();
+      const group = document.getElementById("memberGroupSelect").value;
+      
+      if (!name) {
+        showNotification("لطفاً نام عضو را وارد کنید", "error");
+        return;
+      }
+      
+      if (!group) {
+        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        return;
+      }
+
+      try {
+        // Check if member already exists in this group
+        const checkRes = await fetch(`https://parseapi.back4app.com/classes/Persons?where=${encodeURIComponent(JSON.stringify({ name, group }))}`, { headers });
+        const checkData = await checkRes.json();
+        
+        if (checkData.results.length > 0) {
+          showNotification("این عضو قبلاً در گروه ثبت شده است", "error");
+          return;
+        }
+
+        // Add new member
+        await fetch("https://parseapi.back4app.com/classes/Persons", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ name, group })
+        });
+        
+        document.getElementById("newMemberName").value = "";
+        showNotification(`عضو ${name} با موفقیت به گروه ${group} اضافه شد`, "success");
+        
+        // Refresh attendance if the group is selected
+        const currentGroup = document.getElementById("groupForAttendance").value;
+        if (currentGroup === group) {
+          await populateAttendance();
+        }
+      } catch (error) {
+        console.error("Error adding member:", error);
+        showNotification("خطا در افزودن عضو جدید", "error");
+      }
+    }
+
+    // Initialize on page load
+    checkLogin();
+  </script>
 </body>
 </html>
