@@ -1,454 +1,1499 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدیریت دارایی و حضور</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>سیستم مدیریت گروه‌ها - نسخه بهبود یافته</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
   <style>
     :root {
-      --primary: #4a6cf7;
-      --primary-dark: #3a56d6;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --gray-100: #f8fafc;
-      --gray-200: #e2e8f0;
-      --gray-500: #64748b;
-      --gray-700: #334155;
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #7209b7;
+      --success: #06d6a0;
+      --warning: #ffd166;
+      --danger: #ef476f;
+      --dark: #1e1e2c;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --border: #dee2e6;
+      --card-bg: #ffffff;
+      --body-bg: #f5f7fb;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
     
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: Vazir, Tahoma, sans-serif;
     }
     
+      html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+        font-size: 16px;
+  }
+
+
+    .container {
+      width: 100%;
+      padding: 0 12px;
+      box-sizing: border-box;
+  }
+
+    table {
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+  }
+ 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f2f6ff;
-      color: var(--gray-700);
+      background-color: var(--body-bg);
+      color: var(--dark);
       line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     
     .container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: linear-gradient(to right, var(--primary), #6a11cb);
-      color: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
-    }
-    
-    header h1 {
-      font-size: 1.8rem;
-      margin: 0;
-    }
-    
-    .card {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
-    }
-    
-    .card:hover {
-      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
-      transform: translateY(-3px);
-    }
-    
-    .section-title {
-      display: flex;
-      align-items: center;
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--gray-200);
-      color: var(--primary);
-      font-size: 1.4rem;
-    }
-    
-    .section-title i {
-      margin-left: 0.5rem;
-      font-size: 1.2em;
-    }
-    
-    button, select, input[type="number"], input[type="text"] {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: 1px solid var(--gray-200);
-      border-radius: 0.8rem;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-    }
-    
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
-    }
-    
-    button {
-      background-color: var(--primary);
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      padding: 0.9rem;
-      margin-top: 1rem;
-    }
-    
-    button:hover {
-      background-color: var(--primary-dark);
-    }
-    
-    button.secondary {
-      background-color: var(--success);
-    }
-    
-    button.secondary:hover {
-      background-color: #0da271;
-    }
-    
-    button.danger {
-      background-color: var(--danger);
-    }
-    
-    button.danger:hover {
-      background-color: #dc2626;
-    }
-    
-    button.warning {
-      background-color: var(--warning);
-    }
-    
-    button.warning:hover {
-      background-color: #e69008;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-    }
-    
-    th {
-      background-color: var(--primary);
-      color: white;
-    }
-    
-    th, td {
-      border: 1px solid var(--gray-200);
-      padding: 0.8rem;
-      text-align: center;
-    }
-    
-    tr:nth-child(even) {
-      background-color: var(--gray-100);
-    }
-    
-    tr:hover {
-      background-color: rgba(74, 108, 247, 0.05);
-    }
-    
-    .flex-row {
-      display: flex;
-      gap: 0.8rem;
-      margin: 0.5rem 0;
-    }
-    
-    .flex-row > * {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
       flex: 1;
     }
     
-    .hidden { 
-      display: none; 
-    }
-    
-    .notification {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      padding: 1rem 1.5rem;
-      border-radius: 0.8rem;
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.3s ease;
+      padding: 1.5rem 2rem;
+      border-radius: 0 0 20px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
     }
     
-    .notification.show {
-      opacity: 1;
-      transform: translateY(0);
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,128L48,112C96,96,192,64,288,64C384,64,480,96,576,117.3C672,139,768,149,864,138.7C960,128,1056,96,1152,96C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
     }
     
-    .notification.success {
-      background-color: var(--success);
-    }
-    
-    .notification.error {
-      background-color: var(--danger);
-    }
-    
-    .notification.info {
-      background-color: var(--primary);
-    }
-    
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--gray-700);
-    }
-    
-    .section-header {
+    .header-content {
+      position: relative;
+      z-index: 2;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
-      padding: 0.5rem 0;
+      flex-wrap: wrap;
     }
     
-    .section-header h2 {
-      margin: 0;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .logo-icon {
+      font-size: 2.5rem;
+      color: var(--warning);
+    }
+    
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .logo-subtext {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    .user-info {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .user-icon {
+      font-size: 1.2rem;
+    }
+    
+    /* Card Styles */
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-icon {
       font-size: 1.3rem;
+      color: var(--secondary);
+    }
+    
+    /* Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #5f0a9c;
+      transform: translateY(-2px);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #05b98a;
+      transform: translateY(-2px);
+    }
+    
+    .btn-warning {
+      background: var(--warning);
+      color: var(--dark);
+    }
+    
+    .btn-warning:hover {
+      background: #ffc84d;
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #e83e6c;
+      transform: translateY(-2px);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
       color: var(--primary);
     }
     
-    .section-content {
-      padding: 1rem 0;
-      border-top: 1px solid var(--gray-200);
-      margin-top: 1rem;
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
     }
     
-    .attendance-controls {
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 6px 9px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+      outline: none;
+    }
+    
+    .input-group {
       display: flex;
-      gap: 0.8rem;
-      margin-bottom: 1rem;
+      gap: 10px;
+      margin-bottom: 15px;
     }
     
-    .attendance-controls select {
-      flex: 2;
-    }
-    
-    .attendance-controls button {
+    .input-group .form-control {
       flex: 1;
-      margin-top: 0;
+      padding: auto;
     }
     
-    @media (max-width: 480px) {
-      .flex-row, .attendance-controls {
-        flex-direction: column;
-        gap: 0.5rem;
+    /* Table Styles */
+    .table-responsive {
+      overflow-x: auto;
+    }
+    
+    .table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px var(--border);
+      background: white;
+    }
+    
+    .table th {
+      background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 16px 20px;
+      text-align: right;
+      font-weight: 600;
+    }
+    
+    .table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .table tr:nth-child(even) {
+      background-color: rgba(67, 97, 238, 0.03);
+    }
+    
+    .table tr:hover {
+      background-color: rgba(67, 97, 238, 0.08);
+    }
+    
+    /* Grid System */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -15px;
+    }
+    
+    .col {
+      padding: 0 15px;
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    /* Tabs */
+    .tabs {
+      /*display: flex;*/
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+      text-align: center;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+    
+    .tab {
+      padding: 12px 25px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--gray);
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .tab.active {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Utility Classes */
+    .hidden {
+      display: none;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .text-right {
+      text-align: right;
+    }
+    
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+    
+    .mt-20 {
+      margin-top: 20px;
+    }
+    
+    .alert {
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .alert-success {
+      background: rgba(6, 214, 160, 0.15);
+      border: 1px solid var(--success);
+      color: #027a5e;
+    }
+    
+    .alert-info {
+      background: rgba(67, 97, 238, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary-dark);
+    }
+    
+    .alert-warning {
+      background: rgba(255, 209, 102, 0.2);
+      border: 1px solid var(--warning);
+      color: #8a6d3b;
+    }
+    
+    .alert-danger {
+      background: rgba(239, 71, 111, 0.15);
+      border: 1px solid var(--danger);
+      color: #b71c3a;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-success {
+      background: rgba(6, 214, 160, 0.2);
+      color: #027a5e;
+    }
+    
+    .badge-warning {
+      background: rgba(255, 209, 102, 0.2);
+      color: #8a6d3b;
+    }
+    
+    .badge-danger {
+      background: rgba(239, 71, 111, 0.2);
+      color: #b71c3a;
+    }
+    
+    /* Attendance Status */
+    .status-present {
+      color: var(--success);
+      font-weight: bold;
+    }
+    
+    .status-late {
+      color: var(--warning);
+      font-weight: bold;
+    }
+    
+    .status-absent {
+      color: var(--danger);
+      font-weight: bold;
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      
+      .print-section, .print-section * {
+        visibility: visible;
+      }
+      
+      .print-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+      }
+      
+      .no-print {
+        display: none !important;
       }
     }
+    
+    .print-preview {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .print-preview.active {
+      display: block;
+    }
+    
+    .print-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .print-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .print-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .print-table th {
+      background: var(--primary);
+      color: white;
+      padding: 12px 15px;
+      text-align: right;
+    }
+    
+    .print-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+
+        .button {
+    font-size: 0.75rem;
+    padding: 5px 7px;
+    min-width: unset;
+  }
+
+      .navbar a {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+  
+      html, body {
+        font-size: 2.5vw;;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .user-info {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .col {
+        min-width: 100%;
+      }
+      
+      .tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+
+      tbody {
+        width: 100%;
+      }
+    
+  .table th,
+  .table td {
+    /*padding: 5px 8px;*/
+    overflow-x: auto;
+    font-size: 0.8rem;
+    padding: 5px 0.9rem;
+  }
+
+  .table-responsive {
+    margin-bottom: 12px;
+  }
+
+  #assetTable th,#assetTable td {
+   padding: 7px 10vw;
+  }
+
+  #penaltyRulesTable th, #penaltyRulesTable td{
+    padding: 7px 13vw;
+  }
+
+  #membersTable th, #membersTable td{
+    padding: 7px 13vw;
+  }
+
+  #fullAttendanceTable th, #fullAttendanceTable td{
+    padding: 7px 7vw;
+    flex-wrap: nowrap;
+  }
+
+  .col {
+    min-width: 100%;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+}
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>سامانه مدیریت گروه‌ها و دارایی</h1>
-    </header>
-    
     <!-- Login Section -->
     <div id="loginSection" class="card">
-      <h2 class="section-title">ورود به سیستم</h2>
+      <div class="card-header">
+        <h2 class="card-title">
+          <i class="fas fa-lock card-icon"></i>
+          ورود به سیستم مدیریت
+        </h2>
+      </div>
+      
       <div class="form-group">
-        <label for="accessCode">کد ورود</label>
-        <input type="password" id="accessCode" placeholder="کد ورود را وارد کنید">
+        <label for="accessCode" class="form-label">کد دسترسی</label>
+        <input type="password" id="accessCode" class="form-control" placeholder="کد دسترسی را وارد کنید">
       </div>
-      <button onclick="handleLogin()">ورود به سیستم</button>
+      
+      <div class="text-center">
+        <button onclick="handleLogin()" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i>
+          ورود به سیستم
+        </button>
+      </div>
+      
+      <div class="text-center mt-20">
+        <button onclick="showMasterPasswordModal()" class="btn btn-outline">
+          <i class="fas fa-key"></i>
+          تغییر رمز اصلی
+        </button>
+      </div>
     </div>
     
-    <!-- Main Application (Hidden by default) -->
+    <!-- Main Application -->
     <div id="mainSection" class="hidden">
-      <!-- Assets Section -->
-      <div class="card">
-        <div class="section-header" onclick="toggleSection('assetsSection')">
-          <h2>دارایی گروه‌ها</h2>
-          <span>▼</span>
+      <!-- Header -->
+      <header>
+        <div class="header-content">
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div>
+              <div class="logo-text">سامانه مدیریت گروه‌ها</div>
+              <div class="logo-subtext">نسخه بهبود یافته - رفع تمام مشکلات</div>
+            </div>
+          </div>
+          
+          <div class="user-info">
+            <i class="fas fa-user-circle user-icon"></i>
+            <span>مدیر سیستم</span>
+            <button class="btn btn-danger" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i>
+              خروج
+            </button>
+          </div>
         </div>
-        <div id="assetsSection" class="section-content">
-          <table id="assetTable">
-            <thead>
-              <tr>
-                <th>نام گروه</th>
-                <th>دارایی (تومان)</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <button onclick="fetchAssets()">بروزرسانی اطلاعات دارایی</button>
+      </header>
+      
+      <!-- Tabs Navigation -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('assets')">دارایی گروه‌ها</div>
+        <div class="tab" onclick="switchTab('attendance')">حضور و غیاب</div>
+        <div class="tab" onclick="switchTab('members')">مدیریت اعضا</div>
+        <div class="tab" onclick="switchTab('reports')">گزارشات و پایان روز</div>
+        <div class="tab" onclick="switchTab('settings')">تنظیمات سیستم</div>
+      </div>
+      
+      <!-- Assets Tab -->
+      <div id="assetsTab" class="tab-content active">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-coins card-icon"></i>
+                  دارایی گروه‌ها
+                </h2>
+                <button class="btn btn-outline" onclick="fetchAssets()">
+                  <i class="fas fa-sync-alt"></i>
+                  بروزرسانی
+                </button>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table" id="assetTable">
+                  <thead>
+                    <tr>
+                      <th>نام گروه</th>
+                      <th>دارایی (تومان)</th>
+                      <th>تعداد اعضا</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-edit card-icon"></i>
+                  مدیریت دستی دارایی
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="groupSelect" class="form-label">انتخاب گروه</label>
+                <select id="groupSelect" class="form-control" onchange="updateCurrentAssetDisplay()"></select>
+              </div>
+              
+              <div class="form-group">
+                <label for="amountInput" class="form-label">مقدار تغییر</label>
+                <input type="number" id="amountInput" class="form-control" placeholder="مقدار را وارد کنید">
+              </div>
+              
+              <div class="input-group">
+                <button onclick="changeAsset(true)" class="btn btn-success">
+                  <i class="fas fa-plus-circle"></i>
+                  افزایش
+                </button>
+                <button onclick="changeAsset(false)" class="btn btn-danger">
+                  <i class="fas fa-minus-circle"></i>
+                  کاهش
+                </button>
+              </div>
+              
+              <div id="currentAsset" class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                پس از انتخاب گروه، دارایی فعلی نمایش داده می‌شود
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-layer-group card-icon"></i>
+                  مدیریت گروه‌ها
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="newGroupName" class="form-label">نام گروه</label>
+                <input type="text" id="newGroupName" class="form-control" placeholder="نام گروه جدید را وارد کنید">
+              </div>
+              
+              <div class="input-group">
+                <button onclick="addGroup()" class="btn btn-secondary">
+                  <i class="fas fa-plus"></i>
+                  افزودن گروه
+                </button>
+                <button onclick="removeGroup()" class="btn btn-danger">
+                  <i class="fas fa-trash"></i>
+                  حذف گروه
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
-      <!-- Asset Management Section -->
-      <div class="card">
-        <div class="section-header" onclick="toggleSection('assetManagementSection')">
-          <h2>مدیریت دارایی</h2>
-          <span>▼</span>
-        </div>
-        <div id="assetManagementSection" class="section-content">
-          <div class="form-group">
-            <label for="groupSelect">انتخاب گروه</label>
-            <select id="groupSelect"></select>
+      <!-- Attendance Tab -->
+      <div id="attendanceTab" class="tab-content">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-calendar-check card-icon"></i>
+                  ثبت حضور و غیاب
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="groupForAttendance" class="form-label">انتخاب گروه</label>
+                <select id="groupForAttendance" class="form-control" onchange="populateAttendance()"></select>
+              </div>
+              
+              <div id="attendanceTable"></div>
+            </div>
           </div>
           
-          <div class="form-group">
-            <label for="amountInput">مقدار تغییر</label>
-            <input type="number" id="amountInput" placeholder="مقدار را وارد کنید">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-clock card-icon"></i>
+                  قوانین تأخیر و غیبت
+                </h2>
+              </div>
+              
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                جریمه‌ها بر اساس میزان تأخیر و غیبت اعمال می‌شود
+              </div>
+              
+              <table class="table" id="penaltyRulesTable">
+                <thead>
+                  <tr>
+                    <th>حداکثر تأخیر (دقیقه)</th>
+                    <th>میزان جریمه (تومان)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- قوانین به صورت پویا اضافه می‌شوند -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-history card-icon"></i>
+                  سوابق امروز
+                </h2>
+                <button class="btn btn-outline" onclick="loadTodaysRecords()">
+                  <i class="fas fa-sync-alt"></i>
+                  بروزرسانی
+                </button>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table" id="attendanceRecordsTable">
+                  <thead>
+                    <tr>
+                      <th>نام عضو</th>
+                      <th>گروه</th>
+                      <th>وضعیت</th>
+                      <th>تأخیر (دقیقه)</th>
+                      <th>جریمه (تومان)</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          
-          <div class="flex-row">
-            <button onclick="changeAsset(true)" class="secondary">افزایش دارایی</button>
-            <button onclick="changeAsset(false)" class="danger">کاهش دارایی</button>
-          </div>
-          
-          <div id="currentAsset" class="form-group" style="text-align: center; margin-top: 1.5rem; font-weight: bold;"></div>
         </div>
       </div>
       
-      <!-- Group Management Section -->
-      <div class="card">
-        <div class="section-header" onclick="toggleSection('groupManagementSection')">
-          <h2>مدیریت گروه‌ها</h2>
-          <span>▼</span>
-        </div>
-        <div id="groupManagementSection" class="section-content">
-          <div class="form-group">
-            <label for="newGroupName">نام گروه</label>
-            <input type="text" id="newGroupName" placeholder="نام گروه جدید را وارد کنید">
+      <!-- Members Tab -->
+      <div id="membersTab" class="tab-content">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-user-plus card-icon"></i>
+                  افزودن عضو جدید
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="memberGroupSelect" class="form-label">انتخاب گروه</label>
+                <select id="memberGroupSelect" class="form-control"></select>
+              </div>
+              
+              <div class="form-group">
+                <label for="newMemberName" class="form-label">نام عضو جدید</label>
+                <input type="text" id="newMemberName" class="form-control" placeholder="نام کامل عضو را وارد کنید">
+              </div>
+              
+              <button onclick="addMember()" class="btn btn-success">
+                <i class="fas fa-user-plus"></i>
+                افزودن عضو
+              </button>
+            </div>
           </div>
           
-          <div class="flex-row">
-            <button onclick="addGroup()" class="secondary">افزودن گروه جدید</button>
-            <button onclick="removeGroup()" class="danger">حذف گروه</button>
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-users card-icon"></i>
+                  لیست اعضا
+                </h2>
+                <div class="input-group">
+                  <select id="memberListGroupSelect" class="form-control" onchange="loadMembers()" style="max-width: 200px;"></select>
+                </div>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table" id="membersTable">
+                  <thead>
+                    <tr>
+                      <th>نام عضو</th>
+                      <th>گروه</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <!-- Member Management Section -->
-      <div class="card">
-        <div class="section-header" onclick="toggleSection('memberManagementSection')">
-          <h2>مدیریت اعضا</h2>
-          <span>▼</span>
-        </div>
-        <div id="memberManagementSection" class="section-content">
-          <div class="form-group">
-            <label for="memberGroupSelect">انتخاب گروه</label>
-            <select id="memberGroupSelect"></select>
+      <!-- Reports Tab -->
+      <div id="reportsTab" class="tab-content">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-chart-line card-icon"></i>
+                  گزارشات و پایان روز
+                </h2>
+              </div>
+              
+              <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                قبل از پایان روز، حتماً از داده‌ها خروجی بگیرید
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">گزارش چاپ</label>
+                <div class="input-group">
+                  <button onclick="showPrintPreview('assetTable', 'گزارش دارایی گروه‌ها')" class="btn btn-primary">
+                    <i class="fas fa-print"></i>
+                    چاپ دارایی گروه‌ها
+                  </button>
+                  <button onclick="showPrintPreview('attendanceRecordsTable', 'گزارش حضور و غیاب امروز')" class="btn btn-secondary">
+                    <i class="fas fa-print"></i>
+                    چاپ حضور و غیاب
+                  </button>
+                </div>
+              </div>
+              
+              <div id="printPreview" class="print-preview print-section">
+                <div class="print-header">
+                  <h3 class="print-title" id="printTitle"></h3>
+                  <p>تاریخ: <span id="printDate"></span></p>
+                </div>
+                <div id="printTableContainer"></div>
+                <div class="text-center mt-20">
+                  <button onclick="window.print()" class="btn btn-success">
+                    <i class="fas fa-print"></i>
+                    چاپ گزارش
+                  </button>
+                  <button onclick="closePrintPreview()" class="btn btn-danger">
+                    <i class="fas fa-times"></i>
+                    بستن پیش‌نمایش
+                  </button>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="classCount" class="form-label">تعداد کلاس‌های برگزار شده امروز</label>
+                <input type="number" id="classCount" class="form-control" min="1" value="1">
+              </div>
+              
+              <div class="form-group">
+                <label for="rewardAmount" class="form-label">مقدار پاداش حضور کامل (تومان)</label>
+                <input type="number" id="rewardAmount" class="form-control" value="10000">
+              </div>
+              
+              <div class="form-group">
+                <label for="taxAmount" class="form-label">مقدار مالیات (تومان)</label>
+                <input type="number" id="taxAmount" class="form-control" value="1000">
+              </div>
+              
+              <button onclick="endOfDayProcess()" class="btn btn-success">
+                <i class="fas fa-flag-checkered"></i>
+                انجام عملیات پایان روز
+              </button>
+              
+              <div class="alert alert-info mt-20">
+                <i class="fas fa-info-circle"></i>
+                در پایان روز، به اعضایی که در تمام کلاس‌ها حضور داشتند پاداش تعلق می‌گیرد
+              </div>
+            </div>
           </div>
           
-          <div class="form-group">
-            <label for="newMemberName">نام عضو جدید</label>
-            <input type="text" id="newMemberName" placeholder="نام عضو جدید را وارد کنید">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-file-contract card-icon"></i>
+                  گزارش حضور کامل
+                </h2>
+              </div>
+              
+              <div id="fullAttendanceReport" class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                پس از وارد کردن تعداد کلاس‌ها، لیست اعضای واجد شرایط پاداش نمایش داده می‌شود
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table" id="fullAttendanceTable">
+                  <thead>
+                    <tr>
+                      <th>نام عضو</th>
+                      <th>گروه</th>
+                      <th>تعداد حضور</th>
+                      <th>پاداش (تومان)</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          
-          <button onclick="addMember()" class="secondary">افزودن عضو به گروه</button>
         </div>
       </div>
       
-      <!-- Attendance Section -->
-      <div class="card">
-        <div class="section-header" onclick="toggleSection('attendanceSection')">
-          <h2>ثبت حضور و غیاب</h2>
-          <span>▼</span>
-        </div>
-        <div id="attendanceSection" class="section-content">
-          <div class="attendance-controls">
-            <select id="groupForAttendance" onchange="populateAttendance()"></select>
-            <button onclick="populateAttendance()" class="warning">بارگذاری اعضا</button>
+      <!-- Settings Tab -->
+      <div id="settingsTab" class="tab-content">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-cog card-icon"></i>
+                  تنظیمات قوانین تأخیر و غیبت
+                </h2>
+              </div>
+              
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                برای تغییر قوانین، رمز ویژه مورد نیاز است
+              </div>
+              
+              <div class="form-group">
+                <label for="ruleMasterPassword" class="form-label">رمز ویژه</label>
+                <input type="password" id="ruleMasterPassword" class="form-control" placeholder="رمز ویژه را وارد کنید">
+              </div>
+              
+              <table class="table" id="penaltySettingsTable">
+                <thead>
+                  <tr>
+                    <th>حداکثر تأخیر (دقیقه)</th>
+                    <th>میزان جریمه (تومان)</th>
+                    <th>عملیات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- قوانین به صورت پویا اضافه می‌شوند -->
+                </tbody>
+              </table>
+              
+              <div class="text-center mt-20">
+                <button class="btn btn-secondary" onclick="addRule()">
+                  <i class="fas fa-plus"></i>
+                  افزودن قانون جدید
+                </button>
+                <button class="btn btn-success" onclick="saveRules()">
+                  <i class="fas fa-save"></i>
+                  ذخیره قوانین
+                </button>
+              </div>
+            </div>
           </div>
           
-          <div id="attendanceTable"></div>
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-money-bill-wave card-icon"></i>
+                  تنظیمات پاداش و مالیات
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="dailyReward" class="form-label">مقدار پاداش روزانه (تومان)</label>
+                <input type="number" id="dailyReward" class="form-control" value="10000">
+              </div>
+              
+              <div class="form-group">
+                <label for="taxAmountSettings" class="form-label">مقدار مالیات (تومان)</label>
+                <input type="number" id="taxAmountSettings" class="form-control" value="1000">
+              </div>
+              
+              <div class="form-group">
+                <label for="absentPenalty" class="form-label">جریمه غیبت (تومان)</label>
+                <input type="number" id="absentPenalty" class="form-control" value="5000">
+              </div>
+              
+              <button class="btn btn-success" onclick="saveRewardSettings()">
+                <i class="fas fa-save"></i>
+                ذخیره تنظیمات
+              </button>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <i class="fas fa-key card-icon"></i>
+                  تغییر رمز عبور مدیر
+                </h2>
+              </div>
+              
+              <div class="form-group">
+                <label for="currentMasterPassword" class="form-label">رمز ویژه فعلی</label>
+                <input type="password" id="currentMasterPassword" class="form-control" placeholder="رمز ویژه را وارد کنید">
+              </div>
+              
+              <div class="form-group">
+                <label for="newAdminPassword" class="form-label">رمز عبور جدید مدیر</label>
+                <input type="password" id="newAdminPassword" class="form-control" placeholder="رمز عبور جدید را وارد کنید">
+              </div>
+              
+              <div class="form-group">
+                <label for="confirmAdminPassword" class="form-label">تکرار رمز عبور جدید</label>
+                <input type="password" id="confirmAdminPassword" class="form-control" placeholder="رمز عبور جدید را تکرار کنید">
+              </div>
+              
+              <button class="btn btn-success" onclick="changeAdminPassword()">
+                <i class="fas fa-save"></i>
+                تغییر رمز مدیر
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    
-    <!-- Notification Container -->
-    <div id="notification" class="notification"></div>
   </div>
 
-  <script>
+  <!-- Master Password Modal -->
+  <div id="masterPasswordModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="card-title">
+          <i class="fas fa-key card-icon"></i>
+          تغییر رمز اصلی
+        </h2>
+        <button class="close-modal" onclick="closeMasterPasswordModal()">&times;</button>
+      </div>
+      
+      <div class="form-group">
+        <label for="masterPassword" class="form-label">رمز ویژه</label>
+        <input type="password" id="masterPassword" class="form-control" placeholder="رمز ویژه را وارد کنید">
+      </div>
+      
+      <div class="form-group">
+        <label for="newMainPassword" class="form-label">رمز عبور جدید</label>
+        <input type="password" id="newMainPassword" class="form-control" placeholder="رمز عبور جدید را وارد کنید">
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmMainPassword" class="form-label">تکرار رمز عبور جدید</label>
+        <input type="password" id="confirmMainPassword" class="form-control" placeholder="رمز عبور جدید را تکرار کنید">
+      </div>
+      
+      <div class="text-center">
+        <button class="btn btn-success" onclick="changeMainPassword()">
+          <i class="fas fa-save"></i>
+          تغییر رمز اصلی
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>سیستم مدیریت گروه‌ها | نسخه ۳.۰ | توسعه داده شده با ❤️</p>
+    <p>© ۲۰۲۳ - تمامی حقوق محفوظ است</p>
+  </footer>
+
+   <script>
+    // API Configuration
     const APP_ID = "ncekn7VRIJNsmirVuvocKRhznshe4Zn0mD68ipB3";
     const JS_KEY = "oikoKqNjQ2PaDRRuP8ZL1fUcnoghOjnzwTS2sFLD";
+    const REST_KEY = "WrV8d6K53Huo5PR4VYi8ZnOjINEexK9Onpp5Lcqg";
     const headers = {
       "X-Parse-Application-Id": APP_ID,
       "X-Parse-JavaScript-Key": JS_KEY,
+      "X-Parse-REST-API-Key": REST_KEY,
       "Content-Type": "application/json"
     };
-
+    
+    // Global system settings
+    let systemSettings = {
+      adminPassword: "1234",
+      masterPassword: "master123",
+      penaltyRules: [
+        { maxDelay: 0, penalty: 0 },
+        { maxDelay: 5, penalty: -500 },
+        { maxDelay: 10, penalty: -1000 },
+        { maxDelay: 20, penalty: -2000 },
+        { maxDelay: 30, penalty: -3000 },
+        { maxDelay: 9999, penalty: -4000 }
+      ],
+      absentPenalty: -5000,
+      dailyReward: 10000,
+      tax: 1000
+    };
+    
     // DOM Elements
     const loginSection = document.getElementById("loginSection");
     const mainSection = document.getElementById("mainSection");
-    const notification = document.getElementById("notification");
+    const masterPasswordModal = document.getElementById("masterPasswordModal");
+    
+    loadSystemSettings()
 
     // Login Function
-    function handleLogin() {
+    async function handleLogin() {
       const code = document.getElementById("accessCode").value;
-      if (code === "1234") {
-        localStorage.setItem("loggedIn", true);
-        loginSection.classList.add("hidden");
-        mainSection.classList.remove("hidden");
-        init();
-        showNotification("ورود با موفقیت انجام شد", "success");
-      } else {
-        showNotification("کد ورود نامعتبر است", "error");
+      
+      // Load system settings from database
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          systemSettings = {
+            adminPassword: settings.adminPassword,
+            masterPassword: settings.masterPassword ,
+            penaltyRules: settings.penaltyRules || systemSettings.penaltyRules,
+            absentPenalty: settings.absentPenalty || -5000,
+            dailyReward: settings.dailyReward || 10000,
+            tax: settings.tax || 1000
+          };
+          
+          if (code === settings.adminPassword) {
+            localStorage.setItem("loggedIn", true);
+            loginSection.classList.add("hidden");
+            mainSection.classList.remove("hidden");
+            init();
+            showAlert("ورود با موفقیت انجام شد", "success");
+          } else {
+            showAlert("کد ورود نامعتبر است", "danger");
+          }
+        } else {
+          // Use default settings if no settings in DB
+          if (code === systemSettings.adminPassword) {
+            // Create initial settings in database
+            await createInitialSettings();
+            localStorage.setItem("loggedIn", true);
+            loginSection.classList.add("hidden");
+            mainSection.classList.remove("hidden");
+            init();
+            showAlert("ورود با موفقیت انجام شد", "success");
+          } else {
+            showAlert("کد ورود نامعتبر است", "danger");
+          }
+        }
+      } catch (error) {
+        console.error("Error loading system settings:", error);
+        showAlert("خطا در ارتباط با سرور", "danger");
       }
     }
-
-    // Check if user is already logged in
-    function checkLogin() {
-      if (localStorage.getItem("loggedIn")) {
-        loginSection.classList.add("hidden");
-        mainSection.classList.remove("hidden");
-        init();
+    
+    // Create initial settings in database
+    async function createInitialSettings() {
+      try {
+        await fetch("https://parseapi.back4app.com/classes/SystemSettings", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(systemSettings)
+        });
+      } catch (error) {
+        console.error("Error creating initial settings:", error);
       }
     }
-
+    
+    // Logout function
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      loginSection.classList.remove("hidden");
+      mainSection.classList.add("hidden");
+      document.getElementById("accessCode").value = "";
+      showAlert("با موفقیت از سیستم خارج شدید", "success");
+    }
+    
+    // Show master password modal
+    function showMasterPasswordModal() {
+      masterPasswordModal.style.display = "flex";
+    }
+    
+    // Close master password modal
+    function closeMasterPasswordModal() {
+      masterPasswordModal.style.display = "none";
+      // Reset fields
+      document.getElementById("masterPassword").value = "";
+      document.getElementById("newMainPassword").value = "";
+      document.getElementById("confirmMainPassword").value = "";
+    }
+    
+    // Change main password with master password
+    async function changeMainPassword() {
+      const masterPassword = document.getElementById("masterPassword").value;
+      const newPassword = document.getElementById("newMainPassword").value;
+      const confirmPassword = document.getElementById("confirmMainPassword").value;
+      
+      if (masterPassword !== systemSettings.masterPassword) {
+        showAlert("رمز ویژه وارد شده صحیح نیست", "danger");
+        return;
+      }
+      
+      if (newPassword !== confirmPassword) {
+        showAlert("رمزهای عبور جدید با هم مطابقت ندارند", "danger");
+        return;
+      }
+      
+      if (newPassword.length < 4) {
+        showAlert("رمز عبور باید حداقل ۴ کاراکتر باشد", "danger");
+        return;
+      }
+      
+      // Update in database
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          await fetch(`https://parseapi.back4app.com/classes/SystemSettings/${settings.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ adminPassword: newPassword })
+          });
+        }
+        
+        systemSettings.adminPassword = newPassword;
+        showAlert("رمز عبور اصلی با موفقیت تغییر یافت", "success");
+        closeMasterPasswordModal();
+      } catch (error) {
+        console.error("Error changing password:", error);
+        showAlert("خطا در تغییر رمز عبور", "danger");
+      }
+    }
+    
+    // Change admin password in settings tab
+    async function changeAdminPassword() {
+      const masterPassword = document.getElementById("currentMasterPassword").value;
+      const newPassword = document.getElementById("newAdminPassword").value;
+      const confirmPassword = document.getElementById("confirmAdminPassword").value;
+      
+      if (masterPassword !== systemSettings.masterPassword) {
+        showAlert("رمز ویژه وارد شده صحیح نیست", "danger");
+        return;
+      }
+      
+      if (newPassword !== confirmPassword) {
+        showAlert("رمزهای عبور جدید با هم مطابقت ندارند", "danger");
+        return;
+      }
+      
+      if (newPassword.length < 4) {
+        showAlert("رمز عبور باید حداقل ۴ کاراکتر باشد", "danger");
+        return;
+      }
+      
+      // Update in database
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          await fetch(`https://parseapi.back4app.com/classes/SystemSettings/${settings.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ adminPassword: newPassword })
+          });
+        }
+        
+        systemSettings.adminPassword = newPassword;
+        showAlert("رمز عبور مدیر با موفقیت تغییر یافت", "success");
+        
+        // Reset fields
+        document.getElementById("currentMasterPassword").value = "";
+        document.getElementById("newAdminPassword").value = "";
+        document.getElementById("confirmAdminPassword").value = "";
+      } catch (error) {
+        console.error("Error changing password:", error);
+        showAlert("خطا در تغییر رمز عبور", "danger");
+      }
+    }
+    
     // Initialize the application
     async function init() {
       await fetchAssets();
-      await populateGroupSelect();
-      await populateMemberGroupSelect();
+      await populateAllGroupSelects();
+      await loadPenaltyRules();
       await populateAttendance();
+      await loadTodaysRecords();
+      await loadMembers();
+      await loadRewardSettings();
     }
-
-    // Toggle section visibility
-    function toggleSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      section.classList.toggle("hidden");
-    }
-
-    // Show notification
-    function showNotification(message, type) {
-      notification.textContent = message;
-      notification.className = `notification ${type} show`;
+    
+    // Show alert message
+    function showAlert(message, type) {
+      const alertDiv = document.createElement("div");
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+        ${message}
+      `;
+      
+      document.querySelector(".container").prepend(alertDiv);
       
       setTimeout(() => {
-        notification.classList.remove("show");
-      }, 3000);
+        alertDiv.remove();
+      }, 5000);
     }
-
+    
+    // Switch between tabs
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll(".tab-content").forEach(tab => {
+        tab.classList.remove("active");
+      });
+      
+      // Deactivate all tab buttons
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+      });
+      
+      // Activate selected tab
+      document.getElementById(`${tabName}Tab`).classList.add("active");
+      
+      // Activate tab button
+      document.querySelectorAll(".tab").forEach(tab => {
+        if (tab.textContent.includes(getTabTitle(tabName))) {
+          tab.classList.add("active");
+        }
+      });
+    }
+    
+    // Helper function to get tab title
+    function getTabTitle(tabName) {
+      const titles = {
+        assets: "دارایی گروه‌ها",
+        attendance: "حضور و غیاب",
+        members: "مدیریت اعضا",
+        reports: "گزارشات و پایان روز",
+        settings: "تنظیمات سیستم"
+      };
+      return titles[tabName];
+    }
+    
     // Fetch assets from server
+    /*
     async function fetchAssets() {
       try {
         const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
@@ -458,28 +1503,128 @@
         
         data.results.forEach(row => {
           const amount = new Intl.NumberFormat('fa-IR').format(row.amount);
-          tbody.innerHTML += `<tr><td>${row.name}</td><td>${amount}</td></tr>`;
+          tbody.innerHTML += `
+            <tr>
+              <td>${row.name}</td>
+              <td>${amount}</td>
+              <td>${row.memberCount || 0}</td>
+            </tr>
+          `;
         });
         
-        showNotification("اطلاعات دارایی با موفقیت به‌روزرسانی شد", "success");
+        showAlert("اطلاعات دارایی با موفقیت به‌روزرسانی شد", "success");
       } catch (error) {
         console.error("Error fetching assets:", error);
-        showNotification("خطا در دریافت اطلاعات دارایی", "error");
+        showAlert("خطا در دریافت اطلاعات دارایی", "error");
       }
     }
+    */
+   async function fetchAssets() {
+  try {
+    // ۱. داده‌های Assets و Persons را هم‌زمان بگیرید
+    const [assetsRes, personsRes] = await Promise.all([
+      fetch("https://parseapi.back4app.com/classes/Assets", { headers }).then(r => r.json()),
+      fetch("https://parseapi.back4app.com/classes/Persons", { headers }).then(r => r.json())
+    ]);
 
+    // ۲. شمارش اعضای هر گروه
+    const countMap = {};
+    personsRes.results.forEach(p => {
+      const grp = p.group;
+      countMap[grp] = (countMap[grp] || 0) + 1;
+    });
+
+    // ۳. رندر جدول با مقدار واقعی شمارش‌شده
+    const tbody = document.querySelector("#assetTable tbody");
+    tbody.innerHTML = "";
+    assetsRes.results.forEach(a => {
+      const amount = new Intl.NumberFormat('fa-IR').format(a.amount);
+      const realCount = countMap[a.name] || 0;
+      tbody.innerHTML += `
+        <tr>
+          <td>${a.name}</td>
+          <td>${amount}</td>
+          <td>${realCount}</td>
+        </tr>`;
+    });
+
+    showAlert("اطلاعات دارایی با موفقیت به‌روزرسانی شد", "success");
+  } catch (e) {
+    console.error("Error fetching assets:", e);
+    showAlert("خطا در دریافت اطلاعات دارایی", "danger");
+  }
+}
+
+    // Populate all group dropdowns
+    async function populateAllGroupSelects() {
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
+        const data = await res.json();
+        
+        // Group selectors to update
+        const selectors = [
+          "groupSelect",
+          "groupForAttendance",
+          "memberGroupSelect",
+          "memberListGroupSelect"
+        ];
+        
+        selectors.forEach(selector => {
+          const select = document.getElementById(selector);
+          select.innerHTML = "";
+          
+          data.results.forEach(row => {
+            const opt = document.createElement("option");
+            opt.value = row.name;
+            opt.textContent = row.name;
+            select.appendChild(opt);
+          });
+        });
+        
+        // Update current asset display
+        updateCurrentAssetDisplay();
+      } catch (error) {
+        console.error("Error populating group selects:", error);
+        showAlert("خطا در دریافت لیست گروه‌ها", "error");
+      }
+    }
+    
+    // Update current asset display
+    async function updateCurrentAssetDisplay() {
+      const groupSelect = document.getElementById("groupSelect");
+      const groupName = groupSelect.value;
+      
+      if (!groupName) return;
+      
+      try {
+        const res = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: groupName }))}`, { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const asset = data.results[0];
+          const amount = new Intl.NumberFormat('fa-IR').format(asset.amount);
+          document.getElementById("currentAsset").innerHTML = `
+            <i class="fas fa-info-circle"></i>
+            دارایی فعلی گروه ${groupName}: ${amount} تومان
+          `;
+        }
+      } catch (error) {
+        console.error("Error updating asset display:", error);
+      }
+    }
+    
     // Change asset amount
     async function changeAsset(increase) {
       const name = document.getElementById("groupSelect").value;
       const amount = parseInt(document.getElementById("amountInput").value);
       
       if (!name) {
-        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        showAlert("لطفاً یک گروه انتخاب کنید", "danger");
         return;
       }
       
       if (!amount || amount <= 0) {
-        showNotification("مقدار نامعتبر است. لطفاً یک عدد مثبت وارد کنید", "error");
+        showAlert("مقدار نامعتبر است. لطفاً یک عدد مثبت وارد کنید", "danger");
         return;
       }
 
@@ -488,17 +1633,19 @@
         const data = await res.json();
         
         if (data.results.length === 0) {
-          showNotification("گروه مورد نظر یافت نشد", "error");
+          showAlert("گروه مورد نظر یافت نشد", "danger");
           return;
         }
         
         const obj = data.results[0];
         const newAmount = obj.amount + (increase ? amount : -amount);
         
+        /*
         if (newAmount < 0) {
-          showNotification("مقدار دارایی نمی‌تواند منفی باشد", "error");
+          showAlert("مقدار دارایی نمی‌تواند منفی باشد", "danger");
           return;
         }
+        */
 
         await fetch(`https://parseapi.back4app.com/classes/Assets/${obj.objectId}`, {
           method: "PUT",
@@ -506,22 +1653,21 @@
           body: JSON.stringify({ amount: newAmount })
         });
         
-        const formattedAmount = new Intl.NumberFormat('fa-IR').format(newAmount);
-        document.getElementById("currentAsset").innerText = `دارایی فعلی: ${formattedAmount} تومان`;
-        showNotification(`دارایی گروه ${name} با موفقیت بروزرسانی شد`, "success");
+        showAlert(`دارایی گروه ${name} با موفقیت بروزرسانی شد`, "success");
         await fetchAssets();
+        updateCurrentAssetDisplay();
       } catch (error) {
         console.error("Error changing asset:", error);
-        showNotification("خطا در بروزرسانی دارایی", "error");
+        showAlert("خطا در بروزرسانی دارایی", "danger");
       }
     }
-
+    
     // Add a new group
     async function addGroup() {
       const name = document.getElementById("newGroupName").value.trim();
       
       if (!name) {
-        showNotification("لطفاً نام گروه را وارد کنید", "error");
+        showAlert("لطفاً نام گروه را وارد کنید", "danger");
         return;
       }
 
@@ -531,31 +1677,31 @@
         const checkData = await checkRes.json();
         
         if (checkData.results.length > 0) {
-          showNotification("گروه با این نام قبلاً ایجاد شده است", "error");
+          showAlert("گروه با این نام قبلاً ایجاد شده است", "danger");
           return;
         }
 
         await fetch("https://parseapi.back4app.com/classes/Assets", {
           method: "POST",
           headers,
-          body: JSON.stringify({ name, amount: 0 })
+          body: JSON.stringify({ name, amount: 0, memberCount: 0 })
         });
         
         document.getElementById("newGroupName").value = "";
-        showNotification(`گروه ${name} با موفقیت ایجاد شد`, "success");
-        await init();
+        showAlert(`گروه ${name} با موفقیت ایجاد شد`, "success");
+        await populateAllGroupSelects();
       } catch (error) {
         console.error("Error adding group:", error);
-        showNotification("خطا در ایجاد گروه جدید", "error");
+        showAlert("خطا در ایجاد گروه جدید", "danger");
       }
     }
-
+    
     // Remove a group
     async function removeGroup() {
       const name = document.getElementById("newGroupName").value.trim();
       
       if (!name) {
-        showNotification("لطفاً نام گروه را وارد کنید", "error");
+        showAlert("لطفاً نام گروه را وارد کنید", "danger");
         return;
       }
 
@@ -564,69 +1710,43 @@
         const data = await res.json();
         
         if (data.results.length === 0) {
-          showNotification("گروه مورد نظر یافت نشد", "error");
+          showAlert("گروه مورد نظر یافت نشد", "danger");
           return;
         }
         
+        // First, delete all members in this group
+        const membersRes = await fetch(`https://parseapi.back4app.com/classes/Persons?where=${encodeURIComponent(JSON.stringify({ group: name }))}`, { headers });
+        const membersData = await membersRes.json();
+        
+        for (const member of membersData.results) {
+          await fetch(`https://parseapi.back4app.com/classes/Persons/${member.objectId}`, {
+            method: "DELETE",
+            headers
+          });
+        }
+        
+        // Then delete the group
         await fetch(`https://parseapi.back4app.com/classes/Assets/${data.results[0].objectId}`, {
           method: "DELETE",
           headers
         });
         
         document.getElementById("newGroupName").value = "";
-        showNotification(`گروه ${name} با موفقیت حذف شد`, "success");
-        await init();
+        showAlert(`گروه ${name} و تمام اعضای آن با موفقیت حذف شد`, "success");
+        await populateAllGroupSelects();
+        await loadMembers();
       } catch (error) {
         console.error("Error removing group:", error);
-        showNotification("خطا در حذف گروه", "error");
-      }
-    }
-
-    // Populate group dropdowns
-    async function populateGroupSelect() {
-      try {
-        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
-        const data = await res.json();
-        const select = document.getElementById("groupSelect");
-        const attendSelect = document.getElementById("groupForAttendance");
-        
-        select.innerHTML = "";
-        attendSelect.innerHTML = "";
-        
-        data.results.forEach(row => {
-          const opt = `<option value="${row.name}">${row.name}</option>`;
-          select.innerHTML += opt;
-          attendSelect.innerHTML += opt;
-        });
-      } catch (error) {
-        console.error("Error populating group select:", error);
-        showNotification("خطا در دریافت لیست گروه‌ها", "error");
+        showAlert("خطا در حذف گروه", "danger");
       }
     }
     
-    // Populate member group dropdown
-    async function populateMemberGroupSelect() {
-      try {
-        const res = await fetch("https://parseapi.back4app.com/classes/Assets", { headers });
-        const data = await res.json();
-        const select = document.getElementById("memberGroupSelect");
-        
-        select.innerHTML = "";
-        data.results.forEach(row => {
-          select.innerHTML += `<option value="${row.name}">${row.name}</option>`;
-        });
-      } catch (error) {
-        console.error("Error populating member group select:", error);
-        showNotification("خطا در دریافت لیست گروه‌ها", "error");
-      }
-    }
-
     // Populate attendance table
     async function populateAttendance() {
       const group = document.getElementById("groupForAttendance").value;
       
       if (!group) {
-        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        showAlert("لطفاً یک گروه انتخاب کنید", "danger");
         return;
       }
 
@@ -638,18 +1758,19 @@
           <div style="margin: 1rem 0; font-weight: bold; text-align: center; color: var(--primary);">
             اعضای گروه ${group}
           </div>
-          <table>
+          <table class="table">
             <thead>
               <tr>
                 <th>نام عضو</th>
                 <th>تاخیر (دقیقه)</th>
-                <th>ثبت حضور</th>
+                <th>غیبت</th>
+                <th>حضور</th>
               </tr>
             </thead>
             <tbody>`;
         
         if (data.results.length === 0) {
-          html += `<tr><td colspan="3">هیچ عضوی در این گروه یافت نشد</td></tr>`;
+          html += `<tr><td colspan="4" class="text-center">هیچ عضوی در این گروه یافت نشد</td></tr>`;
         } else {
           data.results.forEach(p => {
             html += `
@@ -660,12 +1781,23 @@
                          id="delay-${p.objectId}" 
                          placeholder="0"
                          min="0"
-                         style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--gray-200);">
+                         class="form-control"
+                         style="max-width: 120px; margin: 0 auto;">
                 </td>
-                <td>
+                <td class="text-center">
+                  <button onclick="markAbsent('${p.objectId}', '${p.name}')" 
+                          class="btn btn-danger"
+                          style="padding: 8px 12px;">
+                    <i class="fas fa-user-times"></i>
+                    غیبت
+                  </button>
+                </td>
+                <td class="text-center">
                   <button onclick="submitAttendance('${p.objectId}')" 
-                          style="padding: 0.5rem 1rem; background: var(--success); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
-                    ثبت
+                          class="btn btn-success"
+                          style="padding: 8px 12px;">
+                    <i class="fas fa-user-check"></i>
+                   حضور
                   </button>
                 </td>
               </tr>`;
@@ -676,38 +1808,53 @@
         document.getElementById("attendanceTable").innerHTML = html;
       } catch (error) {
         console.error("Error populating attendance:", error);
-        showNotification("خطا در دریافت لیست اعضا", "error");
+        showAlert("خطا در دریافت لیست اعضا", "danger");
       }
     }
-
+    
+    // Calculate penalty based on delay
+    function calculatePenalty(delayMinutes) {
+      if (delayMinutes === -1) return systemSettings.absentPenalty; // Absent
+      
+      // Find the appropriate penalty rule
+      for (const rule of systemSettings.penaltyRules) {
+        if (delayMinutes <= rule.maxDelay) {
+          return rule.penalty;
+        }
+      }
+      
+      return systemSettings.penaltyRules[systemSettings.penaltyRules.length - 1].penalty;
+    }
+    
     // Submit attendance
     async function submitAttendance(personId) {
-      const delay = parseInt(document.getElementById(`delay-${personId}`).value) || 0;
+      const delayInput = document.getElementById(`delay-${personId}`);
+      const delay = delayInput.value ? parseInt(delayInput.value) : 0;
       
-      // Calculate reward based on delay
-      let reward = 1000;
-      if (delay <= 0) reward = 1000;
-      else if (delay <= 5) reward = 700;
-      else if (delay <= 10) reward = 500;
-      else reward = -500;
-
+      if (isNaN(delay) || delay < 0) {
+        showAlert("لطفاً زمان تأخیر را به صورت عدد صحیح وارد کنید", "danger");
+        return;
+      }
+      
+      const penalty = calculatePenalty(delay);
+      
       try {
         // Get person details
         const personRes = await fetch(`https://parseapi.back4app.com/classes/Persons/${personId}`, { headers });
         const person = await personRes.json();
         const group = person.group;
-
+        
         // Get group assets
         const assetRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: group }))}`, { headers });
         const assetData = await assetRes.json();
         
         if (assetData.results.length === 0) {
-          showNotification("گروه مربوطه یافت نشد", "error");
+          showAlert("گروه مربوطه یافت نشد", "danger");
           return;
         }
         
         const asset = assetData.results[0];
-        const newAmount = asset.amount + reward;
+        const newAmount = asset.amount + penalty;
         
         // Update group assets
         await fetch(`https://parseapi.back4app.com/classes/Assets/${asset.objectId}`, {
@@ -715,12 +1862,184 @@
           headers,
           body: JSON.stringify({ amount: newAmount })
         });
-
-        showNotification(`حضور ثبت شد. ${reward} تومان ${reward > 0 ? 'پاداش' : 'جریمه'} برای گروه ${group} اعمال شد`, "success");
+        
+        // Create attendance record - FIXED: added personName
+        await fetch("https://parseapi.back4app.com/classes/Attendance", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            person: {
+              __type: "Pointer",
+              className: "Persons",
+              objectId: personId
+            },
+            personName: person.name, // Save person name directly
+            group: group,
+            status: "حاضر",
+            delay: delay,
+            penalty: penalty,
+            date: new Date().toISOString().split('T')[0]
+          })
+        });
+        
+        showAlert(`حضور ${person.name} ثبت شد. ${Math.abs(penalty)} تومان ${penalty < 0 ? 'جریمه' : 'پاداش'} اعمال شد`, "success");
         fetchAssets();
+        loadTodaysRecords();
+        delayInput.value = "";
       } catch (error) {
         console.error("Error submitting attendance:", error);
-        showNotification("خطا در ثبت حضور", "error");
+        showAlert("خطا در ثبت حضور", "danger");
+      }
+    }
+    
+    // Mark member as absent - FIXED: added personName
+    async function markAbsent(personId, personName) {
+      const penalty = systemSettings.absentPenalty; // -5000
+      
+      try {
+        // Get person details
+        const personRes = await fetch(`https://parseapi.back4app.com/classes/Persons/${personId}`, { headers });
+        const person = await personRes.json();
+        const group = person.group;
+        
+        // Get group assets
+        const assetRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: group }))}`, { headers });
+        const assetData = await assetRes.json();
+        
+        if (assetData.results.length === 0) {
+          showAlert("گروه مربوطه یافت نشد", "danger");
+          return;
+        }
+        
+        const asset = assetData.results[0];
+        const newAmount = asset.amount + penalty;
+        
+        // Update group assets
+        await fetch(`https://parseapi.back4app.com/classes/Assets/${asset.objectId}`, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({ amount: newAmount })
+        });
+        
+        // Create attendance record - FIXED: added personName
+        await fetch("https://parseapi.back4app.com/classes/Attendance", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            person: {
+              __type: "Pointer",
+              className: "Persons",
+              objectId: personId
+            },
+            personName: personName, // Save person name directly
+            group: group,
+            status: "غایب",
+            delay: -1,
+            penalty: penalty,
+            date: new Date().toISOString().split('T')[0]
+          })
+        });
+        
+        showAlert(`غیبت ${personName} ثبت شد. ۵,۰۰۰ تومان جریمه اعمال شد`, "success");
+        fetchAssets();
+        loadTodaysRecords();
+      } catch (error) {
+        console.error("Error marking absent:", error);
+        showAlert("خطا در ثبت غیبت", "danger");
+      }
+    }
+    
+    // Load today's attendance records - FIXED: use personName
+    async function loadTodaysRecords() {
+      try {
+        const today = new Date().toISOString().split('T')[0];
+        const res = await fetch(`https://parseapi.back4app.com/classes/Attendance?where=${encodeURIComponent(JSON.stringify({ date: today }))}`, { headers });
+        const data = await res.json();
+        const tbody = document.querySelector("#attendanceRecordsTable tbody");
+        tbody.innerHTML = "";
+        
+        if (data.results.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center">هیچ رکوردی برای امروز ثبت نشده است</td></tr>`;
+          return;
+        }
+        
+        data.results.forEach(record => {
+          let statusClass = "status-present";
+          let statusText = "حاضر";
+          
+          if (record.status === "غایب") {
+            statusClass = "status-absent";
+            statusText = "غایب";
+          } else if (record.delay > 0) {
+            statusClass = "status-late";
+            statusText = "تأخیر";
+          }
+          
+          const penalty = new Intl.NumberFormat('fa-IR').format(record.penalty);
+          const personName = record.personName || "نامشخص";
+          
+          tbody.innerHTML += `
+            <tr>
+              <td>${personName}</td>
+              <td>${record.group}</td>
+              <td class="${statusClass}">${statusText}</td>
+              <td>${record.delay >= 0 ? record.delay : '۰'}</td>
+              <td>${penalty}</td>
+              <td class="text-center">
+                <button onclick="deleteAttendanceRecord('${record.objectId}', '${personName}', ${record.penalty})" 
+                        class="btn btn-danger"
+                        style="padding: 6px 10px;">
+                  <i class="fas fa-trash-alt"></i>
+                  حذف
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        console.error("Error loading attendance records:", error);
+        showAlert("خطا در دریافت سوابق حضور و غیاب", "danger");
+      }
+    }
+    
+    // Delete attendance record
+    async function deleteAttendanceRecord(recordId, personName, penalty) {
+      if (!confirm(`آیا مطمئن هستید که می‌خواهید رکورد ${personName} را حذف کنید؟`)) return;
+      
+      try {
+        // First, get the record to get group information
+        const recordRes = await fetch(`https://parseapi.back4app.com/classes/Attendance/${recordId}`, { headers });
+        const record = await recordRes.json();
+        
+        // Get group assets
+        const assetRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: record.group }))}`, { headers });
+        const assetData = await assetRes.json();
+        
+        if (assetData.results.length > 0) {
+          const asset = assetData.results[0];
+          // Reverse the penalty
+          const newAmount = asset.amount - penalty;
+          
+          // Update group assets
+          await fetch(`https://parseapi.back4app.com/classes/Assets/${asset.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ amount: newAmount })
+          });
+        }
+        
+        // Delete the attendance record
+        await fetch(`https://parseapi.back4app.com/classes/Attendance/${recordId}`, {
+          method: "DELETE",
+          headers
+        });
+        
+        showAlert(`رکورد ${personName} با موفقیت حذف شد`, "success");
+        fetchAssets();
+        loadTodaysRecords();
+      } catch (error) {
+        console.error("Error deleting attendance record:", error);
+        showAlert("خطا در حذف رکورد", "danger");
       }
     }
     
@@ -730,12 +2049,12 @@
       const group = document.getElementById("memberGroupSelect").value;
       
       if (!name) {
-        showNotification("لطفاً نام عضو را وارد کنید", "error");
+        showAlert("لطفاً نام عضو را وارد کنید", "danger");
         return;
       }
       
       if (!group) {
-        showNotification("لطفاً یک گروه انتخاب کنید", "error");
+        showAlert("لطفاً یک گروه انتخاب کنید", "danger");
         return;
       }
 
@@ -745,7 +2064,7 @@
         const checkData = await checkRes.json();
         
         if (checkData.results.length > 0) {
-          showNotification("این عضو قبلاً در گروه ثبت شده است", "error");
+          showAlert("این عضو قبلاً در گروه ثبت شده است", "danger");
           return;
         }
 
@@ -756,22 +2075,522 @@
           body: JSON.stringify({ name, group })
         });
         
-        document.getElementById("newMemberName").value = "";
-        showNotification(`عضو ${name} با موفقیت به گروه ${group} اضافه شد`, "success");
+        // Update group member count
+        const groupRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: group }))}`, { headers });
+        const groupData = await groupRes.json();
         
-        // Refresh attendance if the group is selected
-        const currentGroup = document.getElementById("groupForAttendance").value;
-        if (currentGroup === group) {
-          await populateAttendance();
+        if (groupData.results.length > 0) {
+          const groupObj = groupData.results[0];
+          /*
+          const newCount = (groupObj.memberCount || 0) + 1;
+          
+          await fetch(`https://parseapi.back4app.com/classes/Assets/${groupObj.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ memberCount: newCount })
+          });
+          */
         }
+        
+        document.getElementById("newMemberName").value = "";
+        showAlert(`عضو ${name} با موفقیت به گروه ${group} اضافه شد`, "success");
+        await loadMembers();
+        fetchAssets();
       } catch (error) {
         console.error("Error adding member:", error);
-        showNotification("خطا در افزودن عضو جدید", "error");
+        showAlert("خطا در افزودن عضو جدید", "danger");
       }
     }
+    
+    // Load members
+    async function loadMembers() {
+      const group = document.getElementById("memberListGroupSelect").value;
+      
+      try {
+        let url = "https://parseapi.back4app.com/classes/Persons";
+        if (group) {
+          url += `?where=${encodeURIComponent(JSON.stringify({ group }))}`;
+        }
+        
+        const res = await fetch(url, { headers });
+        const data = await res.json();
+        const tbody = document.querySelector("#membersTable tbody");
+        tbody.innerHTML = "";
+        
+        if (data.results.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="3" class="text-center">هیچ عضوی یافت نشد</td></tr>`;
+          return;
+        }
+        
+        data.results.forEach(member => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${member.name}</td>
+              <td>${member.group}</td>
+              <td class="text-center">
+                <button onclick="deleteMember('${member.objectId}', '${member.name}')" 
+                        class="btn btn-danger"
+                        style="padding: 6px 10px;">
+                  <i class="fas fa-trash-alt"></i>
+                  حذف
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        console.error("Error loading members:", error);
+        showAlert("خطا در دریافت لیست اعضا", "danger");
+      }
+    }
+    
+    // Delete a member
+    async function deleteMember(memberId, memberName) {
+      if (!confirm(`آیا مطمئن هستید که می‌خواهید ${memberName} را حذف کنید؟`)) return;
+      
+      try {
+        // Get member details
+        const memberRes = await fetch(`https://parseapi.back4app.com/classes/Persons/${memberId}`, { headers });
+        const member = await memberRes.json();
+        
+        // Delete member
+        await fetch(`https://parseapi.back4app.com/classes/Persons/${memberId}`, {
+          method: "DELETE",
+          headers
+        });
+        
+        // Update group member count
+        const groupRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: member.group }))}`, { headers });
+        const groupData = await groupRes.json();
+        
+        if (groupData.results.length > 0) {
+          const groupObj = groupData.results[0];
+          /*
+          const newCount = Math.max((groupObj.memberCount || 0) - 1, 0);
+          
+          await fetch(`https://parseapi.back4app.com/classes/Assets/${groupObj.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ memberCount: newCount })
+          });
+          */
+        }
+        
+        showAlert(`عضو ${memberName} با موفقیت حذف شد`, "success");
+        await loadMembers();
+        fetchAssets();
+      } catch (error) {
+        console.error("Error deleting member:", error);
+        showAlert("خطا در حذف عضو", "danger");
+      }
+    }
+    
+    // Load penalty rules from database
+    async function loadPenaltyRules() {
+  try {
+    const res = await fetch("https://parseapi.back4app.com/classes/PenaltyRules", { headers });
+    const data = await res.json();
+    console.log("PenaltyRules raw from server:", data.results);
+    // باقی کد...
+    systemSettings.penaltyRules = data.results.map(r => ({
+      maxDelay: r.maxDelay,
+      penalty:  r.penalty
+    }));
+    renderPenaltyRulesTable();
+    loadPenaltySettings();
+  } catch (e) {
+    console.error("Error loading penalty rules:", e);
+    showAlert("خطا در بارگذاری قوانین تأخیر", "danger");
+  }
+}
 
+    
+    // Render penalty rules table
+    function renderPenaltyRulesTable() {
+      const tbody = document.querySelector("#penaltyRulesTable tbody");
+      tbody.innerHTML = "";
+      
+      systemSettings.penaltyRules.forEach(rule => {
+        const penalty = new Intl.NumberFormat('fa-IR').format(rule.penalty);
+        const maxDelay = rule.maxDelay === 9999 ? "بیش از ۳۰ دقیقه" : rule.maxDelay;
+        
+        tbody.innerHTML += `
+          <tr>
+            <td>${maxDelay}</td>
+            <td>${penalty}</td>
+          </tr>
+        `;
+      });
+    }
+    
+    // Load penalty settings for editing
+    function loadPenaltySettings() {
+      const tbody = document.querySelector("#penaltySettingsTable tbody");
+      tbody.innerHTML = "";
+      
+      systemSettings.penaltyRules.forEach((rule, index) => {
+        const isLast = index === systemSettings.penaltyRules.length - 1;
+        tbody.innerHTML += `
+          <tr>
+            <td>
+              <input type="number" class="form-control" id="maxDelay${index}" 
+                     value="${rule.maxDelay}" min="0" ${isLast ? 'disabled' : ''}>
+            </td>
+            <td>
+              <input type="number" class="form-control" id="penalty${index}" 
+                     value="${rule.penalty}">
+            </td>
+            <td>
+              <button class="btn btn-danger" 
+                      ${isLast ? 'disabled' : ''}
+                      onclick="removeRule(${index})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+    
+    // Add a new rule
+    function addRule() {
+      systemSettings.penaltyRules.splice(systemSettings.penaltyRules.length - 1, 0, {
+        maxDelay: 15,
+        penalty: -1500
+      });
+      loadPenaltySettings();
+    }
+    
+    // Remove a rule
+    function removeRule(index) {
+      if (index === 0 || index === systemSettings.penaltyRules.length - 1) return;
+      systemSettings.penaltyRules.splice(index, 1);
+      loadPenaltySettings();
+    }
+    
+    // Save rules to database - FIXED: save to SystemSettings
+    /*async function saveRules() {
+      const masterPassword = document.getElementById("ruleMasterPassword").value;
+      
+      if (masterPassword !== systemSettings.masterPassword) {
+        showAlert("رمز ویژه وارد شده صحیح نیست", "danger");
+        return;
+      }
+      
+      try {
+        // Get current settings
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          const updatedSettings = {
+            ...settings,
+            penaltyRules: systemSettings.penaltyRules
+          };
+          
+          await fetch(`https://parseapi.back4app.com/classes/SystemSettings/${settings.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify(updatedSettings)
+          });
+          
+          showAlert("قوانین با موفقیت در دیتابیس ذخیره شد", "success");
+          renderPenaltyRulesTable();
+        }
+      } catch (error) {
+        console.error("Error saving rules:", error);
+        showAlert("خطا در ذخیره قوانین", "danger");
+      }
+    }*/
+    async function saveRules() {
+  // 1. خواندن رمز ویژه و اعتبارسنجی
+  const masterPassInput = document.getElementById("ruleMasterPassword").value;
+  if (masterPassInput !== systemSettings.masterPassword) {
+    return showAlert("رمز ویژه اشتباه است", "danger");
+  }
+
+  // 2. استخراج مقادیر ویرایش‌شده از جدول تنظیمات
+  const newRules = [];
+  for (let i = 0; i < systemSettings.penaltyRules.length; i++) {
+    const maxDelayInput = document.getElementById(`maxDelay${i}`);
+    const penaltyInput  = document.getElementById(`penalty${i}`);
+    if (!maxDelayInput || !penaltyInput) continue;  // احتیاط
+
+    const maxDelay = parseInt(maxDelayInput.value, 10);
+    const penalty  = parseInt(penaltyInput.value,  10);
+    // فقط ردیف‌های معتبر (غیرآخر) را ذخیره می‌کنیم
+    if (!isNaN(maxDelay) && !isNaN(penalty) && i < systemSettings.penaltyRules.length - 1) {
+      newRules.push({ maxDelay, penalty });
+    }
+  }
+  // همیشه ردیف پایانی (مثلاً >۳۰ دقیقه) را با همان مقدار قبلی یا اگر ویرایش شده اضافه کن:
+  const lastIndex = systemSettings.penaltyRules.length - 1;
+  const lastRule = systemSettings.penaltyRules[lastIndex];
+  newRules.push({ maxDelay: lastRule.maxDelay, penalty: lastRule.penalty });
+
+  // بازنویسی systemSettings.penaltyRules
+  systemSettings.penaltyRules = newRules;
+
+  try {
+    // 3. حذف تمام قوانین قبلی
+    const existing = await fetch("https://parseapi.back4app.com/classes/PenaltyRules", { headers })
+                          .then(r => r.json());
+    for (const r of existing.results) {
+      await fetch(`https://parseapi.back4app.com/classes/PenaltyRules/${r.objectId}`, {
+        method: "DELETE",
+        headers
+      });
+    }
+
+    // 4. ذخیره قوانین جدید
+    for (const rule of systemSettings.penaltyRules) {
+      await fetch("https://parseapi.back4app.com/classes/PenaltyRules", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          maxDelay: rule.maxDelay,
+          penalty:  rule.penalty
+        })
+      });
+    }
+
+    showAlert("قوانین با موفقیت ذخیره شدند" , "success");
+    renderPenaltyRulesTable();      // به‌روزرسانی جدول نمایش
+    loadPenaltySettings();         // به‌روزرسانی inputs تنظیمات
+  } catch (err) {
+    console.error("Error saving rules:", err);
+    showAlert("خطا در ذخیره قوانین", "danger");
+  }
+}
+
+    // Load reward settings - FIXED: load from SystemSettings
+    async function loadRewardSettings() {
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          
+          // Update local settings
+          systemSettings.dailyReward = settings.dailyReward || 10000;
+          systemSettings.tax = settings.tax || 1000;
+          systemSettings.absentPenalty = settings.absentPenalty || -5000;
+          
+          // Update form fields in reports tab
+          document.getElementById("dailyReward").value = systemSettings.dailyReward;
+          document.getElementById("taxAmount").value = systemSettings.tax;
+          document.getElementById("rewardAmount").value = systemSettings.dailyReward;
+          
+          // Update form fields in settings tab
+          document.getElementById("taxAmountSettings").value = systemSettings.tax;
+          document.getElementById("absentPenalty").value = Math.abs(systemSettings.absentPenalty);
+        }
+      } catch (error) {
+        console.error("Error loading reward settings:", error);
+        showAlert("خطا در دریافت تنظیمات پاداش", "danger");
+      }
+    }
+    
+    // Save reward settings - FIXED: save to SystemSettings
+    async function saveRewardSettings() {
+      const dailyReward = parseInt(document.getElementById("dailyReward").value) || 10000;
+      const tax = parseInt(document.getElementById("taxAmountSettings").value) || 1000;
+      const absentPenalty = -Math.abs(parseInt(document.getElementById("absentPenalty").value) || 5000);
+      console.log(dailyReward, tax, absentPenalty)
+      try {
+        const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+        const data = await res.json();
+        
+        console.log(data.results.length)
+        console.log(data.results[0])
+
+        if (data.results.length > 0) {
+          const settings = data.results[0];
+          const updatedSettings = {
+            ...settings,
+            dailyReward: dailyReward,
+            tax: tax,
+            absentPenalty: absentPenalty
+          };
+
+          console.log("PUT SystemSettings body:", updatedSettings);
+          
+          const reso = await fetch(`https://parseapi.back4app.com/classes/SystemSettings/${settings.objectId}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+              dailyReward: dailyReward,
+            tax: tax,
+            absentPenalty: absentPenalty
+            })
+          });
+          
+          console.log(reso.json())
+
+          // Update local settings
+          systemSettings.dailyReward = dailyReward;
+          systemSettings.tax = tax;
+          systemSettings.absentPenalty = absentPenalty;
+          
+          // Update form fields in reports tab
+          document.getElementById("rewardAmount").value = dailyReward;
+          document.getElementById("taxAmount").value = tax;
+          
+          showAlert("تنظیمات پاداش و مالیات با موفقیت ذخیره شد", "success");
+        } else {
+          // Create new settings if none exist
+          await createInitialSettings();
+          showAlert("تنظیمات اولیه ایجاد شد. لطفاً دوباره امتحان کنید", "info");
+        }
+      } catch (error) {
+        console.error("Error saving reward settings:", error);
+        showAlert("خطا در ذخیره تنظیمات", "danger");
+      }
+    }
+    
+    // Show print preview
+    function showPrintPreview(tableId, title) {
+      const table = document.getElementById(tableId).cloneNode(true);
+      table.classList.add("print-table");
+      
+      document.getElementById("printTitle").textContent = title;
+      document.getElementById("printDate").textContent = new Date().toLocaleDateString('fa-IR');
+      document.getElementById("printTableContainer").innerHTML = "";
+      document.getElementById("printTableContainer").appendChild(table);
+      
+      document.getElementById("printPreview").classList.add("active");
+    }
+    
+    // Close print preview
+    function closePrintPreview() {
+      document.getElementById("printPreview").classList.remove("active");
+    }
+    
+    // End of day process
+    async function endOfDayProcess() {
+      const classCount = parseInt(document.getElementById("classCount").value);
+      const rewardAmount = parseInt(document.getElementById("rewardAmount").value);
+      const taxAmount = parseInt(document.getElementById("taxAmount").value);
+      
+      if (!classCount || classCount <= 0) {
+        showAlert("لطفاً تعداد کلاس‌های برگزار شده را وارد کنید", "danger");
+        return;
+      }
+      
+      if (!rewardAmount || rewardAmount <= 0) {
+        showAlert("لطفاً مقدار پاداش را وارد کنید", "danger");
+        return;
+      }
+
+      try {
+        const today = new Date().toISOString().split('T')[0];
+        const res = await fetch(`https://parseapi.back4app.com/classes/Attendance?where=${encodeURIComponent(JSON.stringify({ date: today }))}`, { headers });
+        const data = await res.json();
+        
+        // Group records by person
+        const attendanceByPerson = {};
+        data.results.forEach(record => {
+          if (!attendanceByPerson[record.person.objectId]) {
+            attendanceByPerson[record.person.objectId] = {
+              name: record.personName,
+              group: record.group,
+              presentCount: 0,
+              totalCount: 0
+            };
+          }
+          
+          attendanceByPerson[record.person.objectId].totalCount++;
+          if (record.status === "حاضر") {
+            attendanceByPerson[record.person.objectId].presentCount++;
+          }
+        });
+        
+        // Prepare report and reward eligible members
+        const reportBody = document.querySelector("#fullAttendanceTable tbody");
+        reportBody.innerHTML = "";
+        
+        let eligibleCount = 0;
+        
+        for (const personId in attendanceByPerson) {
+          const person = attendanceByPerson[personId];
+          const isEligible = person.presentCount >= classCount;
+          
+          if (isEligible) {
+            eligibleCount++;
+            const netReward = rewardAmount - taxAmount;
+            reportBody.innerHTML += `
+              <tr>
+                <td>${person.name}</td>
+                <td>${person.group}</td>
+                <td>${person.presentCount}</td>
+                <td>${new Intl.NumberFormat('fa-IR').format(netReward)}</td>
+              </tr>
+            `;
+            
+            // Add reward to group (after tax)
+            const groupRes = await fetch(`https://parseapi.back4app.com/classes/Assets?where=${encodeURIComponent(JSON.stringify({ name: person.group }))}`, { headers });
+            const groupData = await groupRes.json();
+            
+            if (groupData.results.length > 0) {
+              const groupObj = groupData.results[0];
+              const newAmount = groupObj.amount + netReward;
+              
+              await fetch(`https://parseapi.back4app.com/classes/Assets/${groupObj.objectId}`, {
+                method: "PUT",
+                headers,
+                body: JSON.stringify({ amount: newAmount })
+              });
+            }
+          }
+        }
+        
+        // Delete today's attendance records
+        for (const record of data.results) {
+          await fetch(`https://parseapi.back4app.com/classes/Attendance/${record.objectId}`, {
+            method: "DELETE",
+            headers
+          });
+        }
+        
+        showAlert(`پایان روز با موفقیت انجام شد. ${eligibleCount} عضو واجد شرایط پاداش بودند.`, "success");
+        fetchAssets();
+        loadTodaysRecords();
+      } catch (error) {
+        console.error("Error in end of day process:", error);
+        showAlert("خطا در انجام عملیات پایان روز", "danger");
+      }
+    }
+    
     // Initialize on page load
-    checkLogin();
+    if (localStorage.getItem("loggedIn") === "true") {
+      loginSection.classList.add("hidden");
+      mainSection.classList.remove("hidden");
+      init();
+    }
+
+    async function loadSystemSettings() {
+  try {
+    const res = await fetch("https://parseapi.back4app.com/classes/SystemSettings", { headers });
+    const data = await res.json();
+    console.log("SystemSettings from server:", data.results[0]);  // ← چاپ کامل رکورد
+    if (data.results.length > 0) {
+      const s = data.results[0];
+      systemSettings.objectId       = s.objectId;
+      systemSettings.adminPassword  = s.adminPassword;
+      systemSettings.masterPassword = s.masterPassword;  // ← این خط
+      systemSettings.dailyReward    = s.dailyReward;
+      systemSettings.tax            = s.tax;
+      systemSettings.absentPenalty  = s.absentPenalty;
+      console.log("Loaded masterPassword:", systemSettings.masterPassword);  // ← چاپ مقدار
+    }
+  } catch (e) {
+    console.error("Error loading settings:", e);
+    alert("خطا در بارگذاری تنظیمات");
+  }
+}
+
   </script>
 </body>
 </html>
