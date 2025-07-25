@@ -1,6 +1,6 @@
 {
-  "name": "Asset Manager",
-  "short_name": "Assets",
+  "name": "PishPay",
+  "short_name": "PishPay",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
